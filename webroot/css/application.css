@@ -4,3 +4,6 @@ body {
 .hide {
 	display: none;
 }
+.right {
+	text-align: right;
+}

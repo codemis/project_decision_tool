@@ -4,4 +4,4 @@
 <p><strong>Username</strong>: <?php echo $username; ?></p>
 
 <p>Sincerely,<br>
-	The Coding Network</p>
+Our Project Decision Tool</p>

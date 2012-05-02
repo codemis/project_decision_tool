@@ -5,4 +5,4 @@ Thank you for joining our network.  Your account has been activated.  To log in,
 Username: <?php echo $username; ?>
 
 Sincerely,
-	The Coding Network
+Our Project Decision Tool
