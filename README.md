@@ -17,6 +17,6 @@ This CakePHP application receives text, audio, or video pitches, and lets you se
 
 ## Development
 
-Questions or problems? Please post them on the [issue tracker](). You can contribute changes by forking the project and submitting a pull request.
+Questions or problems? Please post them on the [issue tracker](https://github.com/codemis/project_decision_tool/issues). You can contribute changes by forking the project and submitting a pull request.
 
-This script is created by Johnathan Pulos and is under the [Creative Commons Attribution-ShareAlike License](http://creativecommons.org/licenses/by-sa/3.0/).
+This script is created by Johnathan Pulos and is under the [GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0-standalone.html).

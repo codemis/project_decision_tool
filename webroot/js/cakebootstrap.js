@@ -9,7 +9,6 @@
 * and converts them into pretty Twitter Bootstrap style.
 *
 */
-
 function cakebootstrap()
 {
 //All submit forms wrapped to div.action
