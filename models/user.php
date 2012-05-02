@@ -13,12 +13,14 @@ class User extends AppModel {
 	 * @var string
 	 */
 	public $name = 'User';
+	
 	/**
 	 * The column to display as default
 	 *
 	 * @var string
 	 */
 	public $displayField = 'username';
+	
 	/**
 	 * Setup the validations for this model
 	 *
