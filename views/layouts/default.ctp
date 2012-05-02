@@ -26,6 +26,10 @@
 	        <div class="nav-collapse">
 	          <ul class="nav">
 	            <li><?php echo $this->Html->link('Home', '/'); ?></li>
+							<?php if($session->read('Auth.User.id')): ?>
+								<li><?php echo $this->Html->link("Manage Users", array('controller' => 'users', 'action' => 'index', 'admin' => true)); ?></li>
+								<li><?php echo $this->Html->link("Manage Projects", array('controller' => 'projects', 'action' => 'index', 'admin' => true)); ?></li>
+							<?php endif; ?>
 	          </ul>
 						<ul class="nav pull-right">
 							<?php if($session->read('Auth.User.id')): ?>
