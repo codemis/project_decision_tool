@@ -1,4 +1,7 @@
-<h1>Current Users</h1>
+<div class="row">
+  <div class="span6"><h1>Current Users</h1></div>
+  <div class="span3 right"><?php echo $this->Html->link("<i class='icon-plus icon-white'></i>&nbsp;Add User", array('controller' => 'users', 'action' => 'add', 'admin' => true), array('escape' => false, 'class' => 'btn btn-primary')); ?></div>
+</div>
 <p>
 <?php
 echo $paginator->counter(array('format' => __('Page %page% of %pages%', true)));

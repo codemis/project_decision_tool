@@ -36,7 +36,7 @@ class UsersController extends AppController {
 	 *  @author Technoguru Aka. Johnathan Pulos
 	*/
 	function beforeFilter() {
-		$this->Auth->allow('join', 'activate', 'resend_activation', 'forgot_password', 'reset_password');
+		$this->Auth->allow('activate', 'resend_activation', 'forgot_password', 'reset_password');
 		parent::beforeFilter();
 	}
 	
@@ -134,39 +134,6 @@ class UsersController extends AppController {
 	}
 	
 	/**
-	 * Join the website
-	 *
-	 * @return void
-	 * @access public
-	 * @author Johnathan Pulos
-	 */
-	function join() {
-		if(!empty($this->data)) {
-			if($this->User->validates()){
-    			/**
-    			 * Hash the password, and save the new record
-    			 *
-    			 * @author Johnathan Pulos
-    			 */
-   				$this->data['User']['password'] = $this->Auth->password($this->data['User']['password_original']);
-			}
-			$this->User->create();
-			if ($this->User->save($this->data, array('username', 'name', 'password', 'email'))) {
-				$user = $this->User->read(null,$this->User->id);
-				$newRemoteHash = $this->User->getActivationHash($user['User']['created']);
-				$this->User->saveField('remote_hash', $newRemoteHash);
-				$this->setLinkHashForEmail('users/activate/' . $user['User']['id'], $newRemoteHash);
-				$this->send_user_email($user, 'user_confirm', 'Please confirm your email address.');
-				$this->Session->setFlash("Thank you for joining the network.  Please visit your email, and activate your account.", 'flash_success');
-				$this->redirect('/');
-			}else{
-				$this->Session->setFlash("Unable to save the your information.", 'flash_failure');
-				$this->redirect(array('controller' => 'users', 'action' => 'join', 'admin' => false));
-			}
-		}
-	}
-	
-	/**
 	 * Activates a user account from an incoming link
 	 *
 	 * @param string $id User.id to activate 
@@ -192,8 +159,8 @@ class UsersController extends AppController {
 				 */
 				$this->User->saveField('remote_hash', '');
 				$this->Auth->login($this->User);
-				$this->Session->setFlash("Your account has been activated, and you have been logged in.", 'flash_success');
-				$this->redirect('/');
+				$this->Session->setFlash("Your account has been activated, and you have been logged in. Please set a new password below.", 'flash_success');
+				$this->redirect(array('controller' => 'users', 'action' => 'edit_account', 'admin' => false));
 			}else{
 				$this->Session->setFlash("Your account cannot be activated.  Please contact the webmaster.", 'flash_failure');
 				$this->redirect('/');
@@ -333,6 +300,39 @@ class UsersController extends AppController {
 	 */
 	function admin_index() {
 		$this->set('users', $this->paginate('User'));
+	}
+	
+	/**
+	 * ADMIN: Add a user to the site the website
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	function admin_add() {
+		if(!empty($this->data)) {
+			if($this->User->validates()){
+    			/**
+    			 * Hash the password, and save the new record
+    			 *
+    			 * @author Johnathan Pulos
+    			 */
+   				$this->data['User']['password'] = $this->Auth->password($this->data['User']['password_original']);
+			}
+			$this->User->create();
+			if ($this->User->save($this->data, array('username', 'name', 'password', 'email'))) {
+				$user = $this->User->read(null,$this->User->id);
+				$newRemoteHash = $this->User->getActivationHash($user['User']['created']);
+				$this->User->saveField('remote_hash', $newRemoteHash);
+				$this->setLinkHashForEmail('users/activate/' . $user['User']['id'], $newRemoteHash);
+				$this->send_user_email($user, 'user_confirm', 'Please confirm your email address.');
+				$this->Session->setFlash("The user has been added to the system, and was instructed to activate their account.", 'flash_success');
+				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
+			}else{
+				$this->Session->setFlash("Unable to save the your information.", 'flash_failure');
+				$this->redirect(array('controller' => 'users', 'action' => 'add', 'admin' => true));
+			}
+		}
 	}
 	
 	/**
